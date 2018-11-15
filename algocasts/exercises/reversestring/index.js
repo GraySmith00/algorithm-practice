@@ -40,6 +40,7 @@ function reverse(str) {
 //   return reverse(str.slice(1)) + str.slice(0, 1);
 // }
 
+reverse('hello');
 console.log(reverse('hello'));
 
 module.exports = reverse;
