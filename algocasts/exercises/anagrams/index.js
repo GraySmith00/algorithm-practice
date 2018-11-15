@@ -8,6 +8,69 @@
 //   anagrams('RAIL! SAFETY!', 'fairy tales') --> True
 //   anagrams('Hi there', 'Bye there') --> False
 
-function anagrams(stringA, stringB) {}
+// SOLUTION 1
+
+// function anagrams(stringA, stringB) {
+//   stringA = stringA.replace(/[^\w]/g, '').toLowerCase();
+//   stringB = stringB.replace(/[^\w]/g, '').toLowerCase();
+
+//   function findCounts(str) {
+//     return str.split('').reduce((counts, el) => {
+//       counts[el] = counts[el] + 1 || 1;
+//       return counts;
+//     }, {});
+//   }
+
+//   const countsA = findCounts(stringA);
+//   const countsB = findCounts(stringB);
+
+//   return (
+//     Object.keys(countsA).every(key => {
+//       return countsA[key] === countsB[key];
+//     }) && Object.keys(countsA).length === Object.keys(countsB).length
+//   );
+// }
+
+// SOLUTION 2
+
+// function anagrams(stringA, stringB) {
+//   const aCharMap = charMap(stringA);
+//   const bCharMap = charMap(stringB);
+
+//   if (Object.keys(aCharMap).length !== Object.keys(bCharMap).length) {
+//     return false;
+//   }
+
+//   for (let key in aCharMap) {
+//     if (aCharMap[key] !== bCharMap[key]) return false;
+//   }
+
+//   return true;
+// }
+
+// function charMap(str) {
+//   const charMap = {};
+//   for (let char of str.replace(/[^\w]/g, '').toLowerCase()) {
+//     charMap[char] = charMap[char] + 1 || 1;
+//   }
+//   return charMap;
+// }
+
+// SOLUTION 3
+
+function anagrams(stringA, stringB) {
+  return cleanString(stringA) === cleanString(stringB);
+}
+
+function cleanString(str) {
+  return str
+    .replace(/[^\w]/g, '')
+    .toLowerCase()
+    .split('')
+    .sort()
+    .join('');
+}
+
+console.log(anagrams('One one', 'One one c'));
 
 module.exports = anagrams;
