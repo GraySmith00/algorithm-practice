@@ -192,13 +192,129 @@ const matrix = n => {
   }
 
   while (startRow <= endRow && startCol <= endCol) {
+    // top row
     for (let i = startCol; i <= endCol; i++) {
       result[startRow][i] = counter;
       counter++;
     }
+    startRow++;
+
+    for (let i = startRow; i <= endRow; i++) {
+      result[i][endCol] = counter;
+      counter++;
+    }
+    endCol--;
+
+    for (let i = endCol; i >= startCol; i--) {
+      result[endRow][i] = counter;
+      counter++;
+    }
+    endRow--;
+
+    for (let i = endRow; i >= startRow; i--) {
+      result[i][startCol] = counter;
+      counter++;
+    }
+    startCol++;
   }
 
   return result;
 };
 
 console.log(matrix(3));
+
+// ================================================================
+// anagrams
+// ================================================================
+
+function isAnagram(str1, str2) {
+  const counts1 = getCounts(str1);
+  const counts2 = getCounts(str2);
+
+  if (Object.keys(counts1).length !== Object.keys(counts2).length) return false;
+  return Object.keys(counts1).every(key => counts1[key] === counts2[key]);
+}
+
+function getCounts(str) {
+  return str
+    .replace(/[^\w]/g, '')
+    .toLowerCase()
+    .split('')
+    .reduce((counts, char) => {
+      counts[char] = counts[char] + 1 || 1;
+      return counts;
+    }, {});
+}
+
+// console.log(getCounts('hi there'));
+console.log(isAnagram('robot', 'tobor'));
+
+// ================================================================
+// palindrome
+// ================================================================
+function isPalindrome(str) {
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] !== str[str.length - 1 - i]) return false;
+  }
+  return true;
+}
+
+console.log(isPalindrome('racecars'));
+
+// ================================================================
+// chunked
+// ================================================================
+function chunked(arr, size) {
+  const chunked = [];
+  let index = 0;
+
+  while (index < arr.length) {
+    chunked.push(arr.slice(index, index + size));
+    index += size;
+  }
+  return chunked;
+}
+
+console.log(chunked([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
+
+// ================================================================
+// return second largest number in an array
+// ================================================================
+function secondLargest(arr) {
+  const top = { first: 0, second: 0 };
+  for (let num of arr) {
+    if (num > top.first) {
+      top.second = top.first;
+      top.first = num;
+    } else if (num > top.second && num < top.first) {
+      top.second = num;
+    }
+  }
+
+  return top.second;
+}
+
+console.log(secondLargest([2, 4, 5, 6, 8, 9, 19, 22, 9, 4, 20]));
+
+// ================================================================
+// find the most occuring letter in a string
+// ================================================================
+function maxLetter(str) {
+  let maxChar = '';
+  let maxCount = 0;
+
+  str
+    .replace(/[^\w]/g, '')
+    .split('')
+    .reduce((counts, char) => {
+      counts[char] = counts[char] + 1 || 1;
+      if (counts[char] > maxCount) {
+        maxCount = counts[char];
+        maxChar = char;
+      }
+      return counts;
+    }, {});
+  return maxChar;
+}
+
+console.log(maxLetter('and they hadxxx a really goooood time'));
