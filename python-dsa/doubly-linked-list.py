@@ -70,10 +70,23 @@ class DoublyLinkedList:
         self.length -= 1
         return prevHead
     
+    def get(self, index):
+        if index < 0 or index >= self.length:
+            return None
+        temp = self.head
+        if index < self.length / 2:
+            for _ in range(index):
+                temp = temp.next    
+        else:
+            temp = self.tail
+            for _ in range(self.length - 1, index, -1):
+                temp = temp.prev
+        return temp
+    
 
 ll = DoublyLinkedList(1)
 ll.append(2)
-ll.unshift()
-ll.unshift()
-ll.unshift()
-ll.print_list()
+ll.append(3)
+ll.append(4)
+# ll.print_list()
+print(ll.get(3).value)
